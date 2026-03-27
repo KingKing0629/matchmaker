@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Matchmaker</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 760px; margin: 2rem auto; padding: 0 1rem; }
+    h1 { text-align: center; }
+    .question { margin-bottom: 1rem; }
+    select { width: 100%; max-width: 450px; padding: 0.45rem; margin-top: 0.25rem; }
+    button { display: inline-block; margin-top: 1rem; padding: 0.55rem 1rem; font-size: 1rem; }
+    #compatibility { margin-top: 1.2rem; font-size: 1.2rem; font-weight: bold; }
+  </style>
+</head>
+<body>
+
+  <h1>Matchmaker</h1>
+
+  <div class="question">
+    <label for="q1">Dogs are better than cats</label><br />
+    <select id="q1" aria-label="Dogs are better than cats">
+      <option value="5">Strongly Agree</option>
+      <option value="4">Agree</option>
+      <option value="3">Neither agree nor disagree</option>
+      <option value="2">Disagree</option>
+      <option value="1">Strongly Disagree</option>
+    </select>
+  </div>
+
+  <div class="question">
+    <label for="q2">Do you like JoJo's Bizarre Adventure?</label><br />
+    <select id="q2" aria-label="Do you like JoJo's Bizarre Adventure?">
+      <option value="5">Strongly Agree</option>
+      <option value="4">Agree</option>
+      <option value="3">Neither agree nor disagree</option>
+      <option value="2">Disagree</option>
+      <option value="1">Strongly Disagree</option>
+    </select>
+  </div>
+
+  <div class="question">
+    <label for="q3">Do you like Playboi Carti?</label><br />
+    <select id="q3" aria-label="Do you like Playboi Carti?">
+      <option value="5">Strongly Agree</option>
+      <option value="4">Agree</option>
+      <option value="3">Neither agree nor disagree</option>
+      <option value="2">Disagree</option>
+      <option value="1">Strongly Disagree</option>
+    </select>
+  </div>
+
+  <div class="question">
+    <label for="q4">Do you like sushi?</label><br />
+    <select id="q4" aria-label="Do you like sushi?">
+      <option value="5">Strongly Agree</option>
+      <option value="4">Agree</option>
+      <option value="3">Neither agree nor disagree</option>
+      <option value="2">Disagree</option>
+      <option value="1">Strongly Disagree</option>
+    </select>
+  </div>
+
+  <div class="question">
+    <label for="q5">Nvidia>AMD</label><br />
+    <select id="q5" aria-label="Nvidia>AMD">
+      <option value="5">Strongly Agree</option>
+      <option value="4">Agree</option>
+      <option value="3">Neither agree nor disagree</option>
+      <option value="2">Disagree</option>
+      <option value="1">Strongly Disagree</option>
+    </select>
+  </div>
+
+  <button id="calculateBtn">Calculate Compatibility</button>
+  <p id="compatibility">Choose answers and click the button to calculate.</p>
+
+  <script>
+    console.log('Starting Matchmaker...');
+
+    function calculateMatch(userAnswers, targetAnswers) {
+      let score = 0;
+      const maxScore = userAnswers.length * 5;
+
+      for (let i = 0; i < userAnswers.length; i++) {
+        const difference = Math.abs(userAnswers[i] - targetAnswers[i]);
+        score += Math.max(0, 5 - difference);
+      }
+
+      return Math.round((score / maxScore) * 100);
+    }
+
+    function seematch() {
+      const userAnswers = [
+        Number(document.getElementById('q1').value),
+        Number(document.getElementById('q2').value),
+        Number(document.getElementById('q3').value),
+        Number(document.getElementById('q4').value),
+        Number(document.getElementById('q5').value)
+      ];
+
+      const targetAnswers = [1, 5, 3, 5, 5];
+      const compatibility = calculateMatch(userAnswers, targetAnswers);
+
+      document.getElementById('compatibility').textContent = `Compatibility: ${compatibility}%`;
+      console.log('Compatibility calculated:', compatibility);
+    }
+
+    document.getElementById('calculateBtn').addEventListener('click', seematch);
+  </script>
+
+</body>
+</html>
